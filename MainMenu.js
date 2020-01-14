@@ -1,10 +1,15 @@
 Game.MainMenu = function(game) {};
 
 const buttons = [];
+let isSound = true;
 
 Game.MainMenu.prototype = {
   create: function(game) {
+    //screen size will be set automatically
     this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+    this.scale.pageAlignHorizontally = true;
+    this.scale.pageAlignVertically = true;
+    this.scale.setScreenSize(true);
     //music..........................
     mainMusic = game.add.audio("mainMusic");
     mainMusic.play();
@@ -12,7 +17,7 @@ Game.MainMenu.prototype = {
       mainMusic.play();
     }, this);
     //Images...................
-    game.add.image(0, 0, "background");
+
     logo = game.add.image(
       this.game.world.centerX,
       game.cache.getImage("logo").height / 2,
@@ -44,7 +49,7 @@ Game.MainMenu.prototype = {
       "btn-sfx",
       toggleSound
     );
-    let isSound = false;
+
     function toggleSound() {
       if (isSound) {
         mainMusic.pause();

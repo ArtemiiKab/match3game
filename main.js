@@ -1,6 +1,5 @@
-const game = new Phaser.Game(800, 600, Phaser.AUTO, "");
-
 window.onload = function main() {
+  const game = new Phaser.Game(800, 600, Phaser.AUTO, "", null, true);
   game.state.add("Boot", Game.Boot);
   game.state.add("Preloader", Game.Preloader);
   game.state.add("MainMenu", Game.MainMenu);

@@ -1,9 +1,13 @@
 Game.GameLogic = function(game) {};
-let score;
+let score = 0;
 
 Game.GameLogic.prototype = {
   create: function(game) {
-    this.game.add.image(0, 0, "background");
+    //screen size will be set automatically
+    this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+    this.scale.pageAlignHorizontally = true;
+    this.scale.pageAlignVertically = true;
+    this.scale.setScreenSize(true);
 
     this.SelectedGem = null;
     this.SwapGem = null;
@@ -28,7 +32,7 @@ Game.GameLogic.prototype = {
     this.gameDuration = 10;
 
     this.createScore();
-    //this.createPointer();
+    this.createPointer();
     this.createAudio();
     this.createParticles();
     this.createTimeWarner();
@@ -307,9 +311,10 @@ Game.GameLogic.prototype = {
     }
   },
   createScore: function() {
-    this.scoreTable = game.add.image(
+    this.scoreTable = this.game.add.image(
       this.game.renderer.width / 1.8,
-      this.game.renderer.height - game.cache.getImage("bg-score").height / 2,
+      this.game.renderer.height -
+        this.game.cache.getImage("bg-score").height / 2,
       "bg-score"
     );
 
@@ -338,31 +343,33 @@ Game.GameLogic.prototype = {
     this.scoreLabel.text = score;
   },
   createPointer: function() {
-    this.pointer = game.add.sprite(
-      game.world.centerX,
-      game.world.centerY,
+    this.pointer = this.game.add.sprite(
+      this.game.world.centerX,
+      this.game.world.centerY,
       "pointer"
     );
     this.pointer.anchor.set(0.3, 0.1);
     this.pointer.scale.setTo(0.5);
-    game.physics.enable(this.pointer, Phaser.Physics.ARCADE);
+    this.game.physics.enable(this.pointer, Phaser.Physics.ARCADE);
   },
   createAudio: function() {
-    this.killSound = game.add.audio("kill");
-    this.selectSound = game.add.audio("selectSound");
+    this.killSound = this.game.add.audio("kill");
+    this.selectSound = this.game.add.audio("selectSound");
   },
   endGame: function() {
-    game.state.start("EndGame");
+    this.game.state.start("EndGame");
   },
   createTimeWarner: function() {
-    this.count = game.add.text(
+    this.count = this.game.add.text(
       this.gemImageHeight / 2,
       this.scoreTable.y + this.scoreTable.height / 4,
       "TIME LEFT: " + (this.gameDuration - 1),
       {
         font: "50px Fredoka One",
         fill: "#e85656",
-        align: "right"
+        align: "right",
+        stroke: "#fff",
+        strokeThickness: 8
       }
     );
   },
@@ -372,8 +379,8 @@ Game.GameLogic.prototype = {
   },
 
   createParticles: function() {
-    game.physics.startSystem(Phaser.Physics.ARCADE);
-    this.emitter = game.add.emitter(0, 0, 100);
+    this.game.physics.startSystem(Phaser.Physics.ARCADE);
+    this.emitter = this.game.add.emitter(0, 0, 100);
     this.emitter.makeParticles(["particlegem-01", "particlegem-05"]);
     this.emitter.maxParticleScale = 0.1;
   },

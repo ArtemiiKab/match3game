@@ -3,3 +3,7 @@
   font-family: Fredoka One, Arial, Helvetica, sans-serif;
   cursor: auto;
 }
+
+body {
+  background-image: url(./images/backgrounds/background.jpg);
+}

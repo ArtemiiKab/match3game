@@ -1,10 +1,15 @@
 Game.EndGame = function(game) {};
 Game.EndGame.prototype = {
   create: function(game) {
-    this.game.add.image(0, 0, "background");
+    //screen size will be set automatically
+    this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+    this.scale.pageAlignHorizontally = true;
+    this.scale.pageAlignVertically = true;
+    this.scale.setScreenSize(true);
+
     this.timeup = this.game.add.image(
       this.game.world.centerX,
-      this.game.world.centerY - game.cache.getImage("timeup").height,
+      this.game.world.centerY - this.game.cache.getImage("timeup").height,
       "timeup"
     );
 
@@ -12,16 +17,16 @@ Game.EndGame.prototype = {
 
     this.timeup.alpha = 0;
 
-    game.add
+    this.game.add
       .tween(this.timeup)
       .to({ alpha: 1 }, 2000, Phaser.Easing.Linear.None, true);
     console.log(score);
     this.createScore();
   },
   createScore: function() {
-    this.scoreTable = game.add.image(
+    this.scoreTable = this.game.add.image(
       this.game.world.centerX,
-      this.game.renderer.height - game.cache.getImage("bg-score").height,
+      this.game.renderer.height - this.game.cache.getImage("bg-score").height,
       "bg-score"
     );
 
@@ -41,14 +46,14 @@ Game.EndGame.prototype = {
     this.scoreTable.alpha = 0;
     this.scoreLabel.alpha = 0;
 
-    game.add
+    this.game.add
       .tween(this.scoreTable)
       .to({ alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 2000);
-    game.add
+    this.game.add
       .tween(this.scoreLabel)
       .to({ alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 2000);
 
-    game.add.tween(this.scoreTable.scale).to(
+    this.game.add.tween(this.scoreTable.scale).to(
       { x: 1.1, y: 1.1 },
       1000,
       Phaser.Easing.Linear.None,
@@ -61,7 +66,7 @@ Game.EndGame.prototype = {
       3000
     );
 
-    game.add
+    this.game.add
       .tween(this.scoreLabel.scale)
       .to(
         { x: 1.8, y: 1.8 },
