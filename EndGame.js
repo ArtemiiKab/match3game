@@ -22,6 +22,7 @@ Game.EndGame.prototype = {
       .to({ alpha: 1 }, 2000, Phaser.Easing.Linear.None, true);
     console.log(score);
     this.createScore();
+    this.createMenuBtn();
   },
   createScore: function() {
     this.scoreTable = this.game.add.image(
@@ -79,5 +80,23 @@ Game.EndGame.prototype = {
         true,
         3000
       );
+  },
+
+  createMenuBtn: function() {
+    btn_menu = this.game.add.button(
+      this.game.world.centerX,
+      this.game.world.centerY + 200,
+      "btn-return",
+      function() {
+        this.game.state.start("MainMenu");
+      }
+    );
+    btn_menu.anchor.set(0.5, 0.5);
+    btn_menu.alpha = 0;
+    btn_menu.scale.setTo(0.8, 0.8);
+
+    this.game.add
+      .tween(btn_menu)
+      .to({ alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 4000);
   }
 };

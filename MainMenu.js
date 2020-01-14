@@ -1,7 +1,7 @@
 Game.MainMenu = function(game) {};
 
-const buttons = [];
 let isSound = true;
+let ismainTheme = false;
 
 Game.MainMenu.prototype = {
   create: function(game) {
@@ -10,13 +10,18 @@ Game.MainMenu.prototype = {
     this.scale.pageAlignHorizontally = true;
     this.scale.pageAlignVertically = true;
     this.scale.setScreenSize(true);
-    //music..........................
-    mainMusic = game.add.audio("mainMusic");
-    mainMusic.play();
+    //music
+
+    if (isSound && !ismainTheme) {
+      mainMusic = game.add.audio("mainMusic");
+      ismainTheme = true;
+      mainMusic.play();
+    }
     mainMusic.onStop.add(function() {
       mainMusic.play();
     }, this);
-    //Images...................
+
+    //images
 
     logo = game.add.image(
       this.game.world.centerX,
@@ -42,7 +47,8 @@ Game.MainMenu.prototype = {
       .tween(donut.scale)
       .to({ x: 0.9, y: 0.9 }, 2000, "Linear", true, 1, 1, 2000, true);
 
-    //Buttons....................
+    //buttons
+    this.buttons = [];
     btn_sfx = game.add.button(
       10,
       this.game.renderer.height / 1.4,
@@ -52,10 +58,12 @@ Game.MainMenu.prototype = {
 
     function toggleSound() {
       if (isSound) {
+        console.log("sound off");
         mainMusic.pause();
         isSound = false;
       } else {
-        mainMusic.play();
+        console.log("sound on");
+        mainMusic.resume();
         isSound = true;
       }
     }
@@ -74,7 +82,7 @@ Game.MainMenu.prototype = {
       .tween(btn_start)
       .to({ alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 2000);
 
-    buttons.push(btn_start, btn_sfx);
+    this.buttons.push(btn_start, btn_sfx);
 
     //finger pointer
     pointer = game.add.sprite(
@@ -96,8 +104,8 @@ Game.MainMenu.prototype = {
       pointer.body.velocity.set(0);
     }
     // buttons hover
-    buttons.map(it => it.scale.setTo(1));
-    buttons
+    this.buttons.map(it => it.scale.setTo(1));
+    this.buttons
       .filter(it => it.input.pointerOver())
       .map(it2 => it2.scale.setTo(1.1));
   }

@@ -29,7 +29,7 @@ Game.GameLogic.prototype = {
     this.fillMatrixWithGems();
 
     //choose game duration in sec
-    this.gameDuration = 10;
+    this.gameDuration = 30;
 
     this.createScore();
     this.createPointer();
@@ -119,8 +119,7 @@ Game.GameLogic.prototype = {
       //find the click on a matrix
       this.startPosX = (gem.x - this.gemImageWidth / 2) / this.gemImageWidth;
       this.startPosY = (gem.y - this.gemImageHeight / 2) / this.gemImageHeight;
-
-      this.selectSound.play();
+      if (isSound) this.selectSound.play();
     }
   },
 
@@ -274,8 +273,7 @@ Game.GameLogic.prototype = {
     matches.map(it => this.gems.remove(it));
     matches.map(it => this.gemExplode(it));
     this.incrementScore(matches);
-
-    this.killSound.play();
+    if (isSound) this.killSound.play();
   },
   rotateGems: function() {
     this.gemMatrix.map((it, index) =>
@@ -355,6 +353,11 @@ Game.GameLogic.prototype = {
   createAudio: function() {
     this.killSound = this.game.add.audio("kill");
     this.selectSound = this.game.add.audio("selectSound");
+    this.mainMusic = this.game.add.audio("mainMusic");
+
+    this.mainMusic.onStop.add(function() {
+      if (isSound) this.mainMusic.play();
+    }, this);
   },
   endGame: function() {
     this.game.state.start("EndGame");

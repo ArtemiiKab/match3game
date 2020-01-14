@@ -6,6 +6,7 @@ Game.Preloader.prototype = {
     //Menu
     this.load.image("logo", "./images/donuts_logo.png");
     this.load.image("btn-play", "./images/btn-play.png");
+    this.load.image("btn-return", "./images/btn-return.png");
     this.load.image("btn-sfx", "./images/btn-sfx.png");
     this.load.image("bg-score", "./images/bg-score.png");
     this.load.image("big-shadow", "./images/big-shadow.png");
@@ -20,7 +21,6 @@ Game.Preloader.prototype = {
     this.load.image("gem-04", "./images/game/gem-04.png");
     this.load.image("gem-05", "./images/game/gem-05.png");
     this.load.image("gem-06", "./images/game/gem-06.png");
-    this.load.image("gem-07", "./images/game/gem-07.png");
 
     //Partical
     this.load.image("particlegem-01", "./images/particles/particle-1.png");
